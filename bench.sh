@@ -1,0 +1,1 @@
+go test -bench=. -count=10 -timeout=10h
