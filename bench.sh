@@ -1,1 +1,1 @@
-go test -bench=. -count=10 -timeout=10h
+go test -bench=. -count=10 -benchmem -timeout=10h
