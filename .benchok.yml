@@ -1,0 +1,29 @@
+base:
+  file: "base.txt"
+  beforerun: "rm -f -- base.txt"
+  run: "sh bench.sh > base.txt"
+  maxrun: 3
+  maxerr: 5
+
+cmp:
+  file: "latest.txt"
+  beforerun: "rm -f -- latest.txt"
+  run: "sh bench.sh > latest.txt"
+  afterrun: "benchstat base.txt latest.txt"
+  maxrun: 3
+  maxerr: 5
+
+rbase:
+  file: "rbase.txt"
+  beforerun: "rm -f -- rbase.txt"
+  run: "sh rbench.sh > rbase.txt"
+  maxrun: 3
+  maxerr: 5
+
+rcmp:
+  file: "rlatest.txt"
+  beforerun: "rm -f -- rlatest.txt"
+  run: "sh rbench.sh > rlatest.txt"
+  afterrun: "benchstat rbase.txt rlatest.txt"
+  maxrun: 3
+  maxerr: 5
