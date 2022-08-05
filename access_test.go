@@ -6,15 +6,15 @@ import (
 )
 
 func BenchmarkMapAccessHit(b *testing.B) {
-	b.Run("Int64", runWith(benchmarkMapAccessHitInt64, case2...))
-	b.Run("Int32", runWith(benchmarkMapAccessHitInt32, case2...))
-	b.Run("Str", runWith(benchmarkMapAccessHitStr, case2...))
+	b.Run("Int64", runWith(benchmarkMapAccessHitInt64, cases...))
+	b.Run("Int32", runWith(benchmarkMapAccessHitInt32, cases...))
+	b.Run("Str", runWith(benchmarkMapAccessHitStr, cases...))
 }
 
 func BenchmarkMapAccessMiss(b *testing.B) {
-	b.Run("Int64", runWith(benchmarkMapAccessMissInt64, case2...))
-	b.Run("Int32", runWith(benchmarkMapAccessMissInt32, case2...))
-	b.Run("Str", runWith(benchmarkMapAccessMissStr, case2...))
+	b.Run("Int64", runWith(benchmarkMapAccessMissInt64, cases...))
+	b.Run("Int32", runWith(benchmarkMapAccessMissInt32, cases...))
+	b.Run("Str", runWith(benchmarkMapAccessMissStr, cases...))
 }
 
 func benchmarkMapAccessMissInt64(b *testing.B, n int) {

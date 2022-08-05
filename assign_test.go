@@ -6,15 +6,15 @@ import (
 )
 
 func BenchmarkMapAssignGrow(b *testing.B) {
-	b.Run("Int64", runWith(benchmarkMapAssignGrowInt64, case1...))
-	b.Run("Int32", runWith(benchmarkMapAssignGrowInt32, case1...))
-	b.Run("Str", runWith(benchmarkMapAssignGrowStr, case1...))
+	b.Run("Int64", runWith(benchmarkMapAssignGrowInt64, cases...))
+	b.Run("Int32", runWith(benchmarkMapAssignGrowInt32, cases...))
+	b.Run("Str", runWith(benchmarkMapAssignGrowStr, cases...))
 }
 
 func BenchmarkMapAssignPreAllocate(b *testing.B) {
-	b.Run("Int64", runWith(benchmarkMapAssignPreAllocateInt64, case1...))
-	b.Run("Int32", runWith(benchmarkMapAssignPreAllocateInt32, case1...))
-	b.Run("Str", runWith(benchmarkMapAssignPreAllocateStr, case1...))
+	b.Run("Int64", runWith(benchmarkMapAssignPreAllocateInt64, cases...))
+	b.Run("Int32", runWith(benchmarkMapAssignPreAllocateInt32, cases...))
+	b.Run("Str", runWith(benchmarkMapAssignPreAllocateStr, cases...))
 }
 
 func benchmarkMapAssignGrowInt32(b *testing.B, n int) {
