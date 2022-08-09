@@ -6,7 +6,16 @@ import (
 )
 
 var (
-	cases = []int{6, 12, 18, 24, 30, 64, 128, 256, 1 << 16}
+	cases = []int{6, 12, 18, 24, 30,
+		64,
+		128,
+		256,
+		512,
+		1024,
+		2048,
+		4096,
+		8192,
+		1 << 16}
 )
 
 func runWith(f func(*testing.B, int), v ...int) func(*testing.B) {
