@@ -5,6 +5,24 @@ import (
 	"testing"
 )
 
+func benchmarkMapIter(b *testing.B, n int) {
+	m := make(map[int]int, n)
+	for i := 0; i < n; i++ {
+		m[i] = i
+	}
+	b.ResetTimer()
+	var tmp int
+	for i := 0; i < b.N; i++ {
+		for k, v := range m {
+			tmp += k + v
+		}
+	}
+}
+
+func BenchmarkMapIter(b *testing.B) {
+	b.Run("Int", runWith(benchmarkMapIter, cases...))
+}
+
 func BenchmarkMapAccessHit(b *testing.B) {
 	b.Run("Int64", runWith(benchmarkMapAccessHitInt64, cases...))
 	b.Run("Int32", runWith(benchmarkMapAccessHitInt32, cases...))
