@@ -1,1 +1,0 @@
-go test -bench=Map -run=NOTEST -timeout=10h -count=10 runtime

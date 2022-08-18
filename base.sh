@@ -1,0 +1,1 @@
+nohup sh -c 'benchok base && benchok rbase' > tmp.txt & 

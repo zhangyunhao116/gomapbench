@@ -1,0 +1,1 @@
+nohup sh -c 'benchok cmp && benchok rcmp' > tmp.txt & 
