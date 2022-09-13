@@ -9,7 +9,6 @@ cmp:
   file: "latest.txt"
   beforerun: "rm -f -- latest.txt"
   run: "go test -bench=. -run=NOTEST -count=10 -benchmem -timeout=10h > latest.txt"
-  afterrun: "benchstat base.txt latest.txt"
   maxrun: 3
   maxerr: 5
 
@@ -24,6 +23,5 @@ rcmp:
   file: "rlatest.txt"
   beforerun: "rm -f -- rlatest.txt"
   run: "go test -bench=Map -run=NOTEST -timeout=10h -count=10 runtime > rlatest.txt"
-  afterrun: "benchstat rbase.txt rlatest.txt"
   maxrun: 3
   maxerr: 5
