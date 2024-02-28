@@ -1,5 +1,7 @@
 package gomapbench
 
+//go:generate go run cmd/main.go cmd/config.go
+
 import (
 	"strconv"
 	"testing"
