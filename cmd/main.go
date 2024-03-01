@@ -36,7 +36,7 @@ type Variant struct {
 }
 
 func main() {
-	genenrateVersion, ok := os.LookupEnv("BENCH_MAP")
+	genenrateVersion, ok := os.LookupEnv("BENCH_TYPE")
 	if !ok || genenrateVersion == "" {
 		genenrateVersion = "runtime"
 	}
@@ -50,11 +50,18 @@ func main() {
 			Imports: "\"strconv\"\n\"testing\"\n",
 		},
 		{
-			Name:    "swisstable0",
+			Name:    "swiss0",
 			Package: "gomapbench",
 			Path:    "bench_test.go",
 			genmap:  &swisstable0{},
 			Imports: "\"strconv\"\n\"testing\"\n\"github.com/zhangyunhao116/xmap\"\n",
+		},
+		{
+			Name:    "swiss1",
+			Package: "gomapbench",
+			Path:    "bench_test.go",
+			genmap:  &swisstable1{},
+			Imports: "\"strconv\"\n\"testing\"\n\"github.com/cockroachdb/swiss\"\n",
 		},
 	}
 	for _, v := range impls {

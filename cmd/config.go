@@ -69,3 +69,30 @@ func (r *swisstable0) DeleteAll(self string) string {
 func (r *swisstable0) RangeAll(self, k, v, content string) string {
 	return fmt.Sprintf("%s.Range(func(%s, %s int) bool { %s \n return true })", self, k, v, content)
 }
+
+type swisstable1 struct {
+}
+
+func (r *swisstable1) New(k, v, cap string) string {
+	return fmt.Sprintf("swiss.New[%s,%s](%s)", k, v, cap)
+}
+
+func (r *swisstable1) Store(self, k, v string) string {
+	return fmt.Sprintf("%s.Put(%s, %s)", self, k, v)
+}
+
+func (r *swisstable1) Load(self, k string) string {
+	return fmt.Sprintf("%s.Get(%s)", self, k)
+}
+
+func (r *swisstable1) Delete(self, k string) string {
+	return fmt.Sprintf("%s.Delete(%s)", self, k)
+}
+
+func (r *swisstable1) DeleteAll(self string) string {
+	return fmt.Sprintf("%s.Clear()", self)
+}
+
+func (r *swisstable1) RangeAll(self, k, v, content string) string {
+	return fmt.Sprintf("%s.All(func(%s, %s int) bool { %s \n return true })", self, k, v, content)
+}

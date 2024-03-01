@@ -5,6 +5,8 @@ package gomapbench
 import (
 	"strconv"
 	"testing"
+
+	_ "github.com/cockroachdb/swiss"
 )
 
 var (
