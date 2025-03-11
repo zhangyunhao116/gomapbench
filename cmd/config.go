@@ -43,6 +43,7 @@ func (r *runtimeMap) RangeAll(self, k, v, content string) string {
 	return fmt.Sprintf("for %s,%s := range %s { %s}", k, v, self, content)
 }
 
+// github.com/zhangyunhao116/xmap
 type swisstable0 struct {
 }
 
@@ -70,6 +71,7 @@ func (r *swisstable0) RangeAll(self, k, v, content string) string {
 	return fmt.Sprintf("%s.Range(func(%s, %s int) bool { %s \n return true })", self, k, v, content)
 }
 
+// github.com/zhangyunhao116/xmap
 type swisstable1 struct {
 }
 

@@ -1,7 +1,6 @@
 package gomapbench
 
 import (
-	"github.com/cockroachdb/swiss"
 	"strconv"
 	"testing"
 )
@@ -41,46 +40,45 @@ func BenchmarkMapAssignReuse(b *testing.B) {
 }
 
 func benchmarkMapIter(b *testing.B, n int) {
-	m := swiss.New[int, int](n)
+	m := make(map[int]int, n)
 	for i := 0; i < n; i++ {
-		m.Put(i, i)
+		m[i] = i
 	}
 	b.ResetTimer()
 	var tmp int
 	for i := 0; i < b.N; i++ {
-		m.All(func(k, v int) bool {
+		for k, v := range m {
 			tmp += k + v
-			return true
-		})
+		}
 	}
 }
 
 func benchmarkMapAccessMissInt64(b *testing.B, n int) {
-	m := swiss.New[int64, int](0)
+	m := make(map[int64]int)
 	for j := 0; j < n; j++ {
-		m.Put(int64(j), j)
+		m[int64(j)] = j
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_, _ = m.Get(int64(i) + int64(n))
+		_, _ = m[int64(i)+int64(n)]
 	}
 }
 
 func benchmarkMapAccessMissInt32(b *testing.B, n int) {
-	m := swiss.New[int32, int](0)
+	m := make(map[int32]int)
 	for j := 0; j < n; j++ {
-		m.Put(int32(j), j)
+		m[int32(j)] = j
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_, _ = m.Get(int32(i) + int32(n))
+		_, _ = m[int32(i)+int32(n)]
 	}
 }
 
 func benchmarkMapAccessMissStr(b *testing.B, n int) {
-	m := swiss.New[string, int](0)
+	m := make(map[string]int)
 	for j := 0; j < n; j++ {
-		m.Put(strconv.Itoa(j), j)
+		m[strconv.Itoa(j)] = j
 	}
 	miss := make([]string, n)
 	for j := 0; j < n; j++ {
@@ -88,62 +86,62 @@ func benchmarkMapAccessMissStr(b *testing.B, n int) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_, _ = m.Get(miss[i&(n-1)])
+		_, _ = m[miss[i&(n-1)]]
 	}
 }
 
 func benchmarkMapAccessHitInt64(b *testing.B, n int) {
 	type ttype = int64
-	m := swiss.New[ttype, int](n)
+	m := make(map[ttype]int, n)
 	for i := 0; i < n; i++ {
-		m.Put(ttype(i), i)
+		m[ttype(i)] = i
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_, _ = m.Get(ttype(i & (n - 1)))
+		_, _ = m[ttype(i&(n-1))]
 	}
 }
 
 func benchmarkMapAccessHitInt32(b *testing.B, n int) {
 	type ttype = int32
-	m := swiss.New[ttype, int](n)
+	m := make(map[ttype]int, n)
 	for i := 0; i < n; i++ {
-		m.Put(ttype(i), i)
+		m[ttype(i)] = i
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_, _ = m.Get(ttype(i & (n - 1)))
+		_, _ = m[ttype(i&(n-1))]
 	}
 }
 
 func benchmarkMapAccessHitStr(b *testing.B, n int) {
 	type ttype = string
-	m := swiss.New[ttype, int](n)
+	m := make(map[ttype]int, n)
 	ss := make([]string, n)
 	for i := 0; i < n; i++ {
-		m.Put(strconv.Itoa(i), i)
+		m[strconv.Itoa(i)] = i
 		ss[i] = strconv.Itoa(i)
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_, _ = m.Get(ss[i&(n-1)])
+		_, _ = m[ss[i&(n-1)]]
 	}
 }
 
 func benchmarkMapAssignGrowInt32(b *testing.B, n int) {
 	for i := 0; i < b.N; i++ {
-		m := swiss.New[int32, int](0)
+		m := make(map[int32]int)
 		for j := 0; j < n; j++ {
-			m.Put(int32(j), j)
+			m[int32(j)] = j
 		}
 	}
 }
 
 func benchmarkMapAssignGrowInt64(b *testing.B, n int) {
 	for i := 0; i < b.N; i++ {
-		m := swiss.New[int64, int](0)
+		m := make(map[int64]int)
 		for j := 0; j < n; j++ {
-			m.Put(int64(j), j)
+			m[int64(j)] = j
 		}
 	}
 }
@@ -155,27 +153,27 @@ func benchmarkMapAssignGrowStr(b *testing.B, n int) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		m := swiss.New[string, int](0)
+		m := make(map[string]int)
 		for j := 0; j < n; j++ {
-			m.Put(k[j], j)
+			m[k[j]] = j
 		}
 	}
 }
 
 func benchmarkMapAssignPreAllocateInt32(b *testing.B, n int) {
 	for i := 0; i < b.N; i++ {
-		m := swiss.New[int32, int](n)
+		m := make(map[int32]int, n)
 		for j := 0; j < n; j++ {
-			m.Put(int32(j), j)
+			m[int32(j)] = j
 		}
 	}
 }
 
 func benchmarkMapAssignPreAllocateInt64(b *testing.B, n int) {
 	for i := 0; i < b.N; i++ {
-		m := swiss.New[int64, int](n)
+		m := make(map[int64]int, n)
 		for j := 0; j < n; j++ {
-			m.Put(int64(j), j)
+			m[int64(j)] = j
 		}
 	}
 }
@@ -187,32 +185,36 @@ func benchmarkMapAssignPreAllocateStr(b *testing.B, n int) {
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		m := swiss.New[string, int](n)
+		m := make(map[string]int, n)
 		for j := 0; j < n; j++ {
-			m.Put(k[j], j)
+			m[k[j]] = j
 		}
 	}
 }
 
 func benchmarkMapAssignReuseInt32(b *testing.B, n int) {
-	m := swiss.New[int32, int](n)
+	m := make(map[int32]int, n)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		for j := 0; j < n; j++ {
-			m.Put(int32(j), j)
+			m[int32(j)] = j
 		}
-		m.Clear()
+		for k := range m {
+			delete(m, k)
+		}
 	}
 }
 
 func benchmarkMapAssignReuseInt64(b *testing.B, n int) {
-	m := swiss.New[int64, int](n)
+	m := make(map[int64]int, n)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		for j := 0; j < n; j++ {
-			m.Put(int64(j), j)
+			m[int64(j)] = j
 		}
-		m.Clear()
+		for k := range m {
+			delete(m, k)
+		}
 	}
 }
 
@@ -221,12 +223,14 @@ func benchmarkMapAssignReuseStr(b *testing.B, n int) {
 	for i := 0; i < len(k); i++ {
 		k[i] = strconv.Itoa(i)
 	}
-	m := swiss.New[string, int](n)
+	m := make(map[string]int, n)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		for j := 0; j < n; j++ {
-			m.Put(k[j], j)
+			m[k[j]] = j
 		}
-		m.Clear()
+		for k := range m {
+			delete(m, k)
+		}
 	}
 }

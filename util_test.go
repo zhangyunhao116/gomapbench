@@ -5,21 +5,13 @@ package gomapbench
 import (
 	"strconv"
 	"testing"
-
-	_ "github.com/cockroachdb/swiss"
 )
 
 var (
-	cases = []int{6, 12, 18, 24, 30,
-		64,
-		128,
-		256,
-		512,
+	cases = []int{1, 3, 7, 8, 12, 18,
+		30, 200,
 		1024,
-		2048,
-		4096,
-		8192,
-		1 << 16}
+		65536}
 )
 
 func runWith(f func(*testing.B, int), v ...int) func(*testing.B) {
